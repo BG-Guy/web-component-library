@@ -38,6 +38,8 @@
 
   /* Status */
   --danger: #dc2626;           /* Error text and borders. 4.8:1 vs white */
+  --success: #15803d;          /* Success text, icons, borders. 5:1 vs white */
+  --warning: #b45309;          /* Warning text, icons, borders. 5:1 vs white */
 
   /* ---------------------------------------------------------------------------
    * Typography
