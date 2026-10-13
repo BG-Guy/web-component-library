@@ -1,0 +1,106 @@
+/**
+ * Design Tokens
+ * -----------------------------------------------------------------------------
+ * The single source of truth for every module in this library. Components
+ * reference these semantic custom properties instead of hard-coded values, so
+ * a change here propagates everywhere.
+ *
+ * Load this file before any component stylesheet:
+ *   <link rel="stylesheet" href="tokens/variables.css">
+ *
+ * Override globally in your own :root, or scope an override to a wrapper:
+ *   .promo { --primary: #7c3aed; --primary-hover: #6d28d9; }
+ */
+
+:root {
+  /* ---------------------------------------------------------------------------
+   * Color
+   * ------------------------------------------------------------------------ */
+
+  /* Brand */
+  --primary: #2563eb;          /* Buttons, links, active states. 5.2:1 vs white */
+  --primary-hover: #1d4ed8;    /* Hover/pressed state for --primary */
+  --accent: #f59e0b;           /* Highlights, badges. Pair with --text-main, not white */
+
+  /* Surfaces */
+  --surface-light: #ffffff;    /* Default page and card background */
+  --surface-dark: #0f172a;     /* Inverted sections: hero bands, footers */
+
+  /* Text */
+  --text-main: #1e293b;        /* Body copy and headings. 14.6:1 vs white */
+  --text-muted: #64748b;       /* Captions, helper text, metadata. 4.8:1 vs white */
+  --text-inverse: #f8fafc;     /* Text on --surface-dark or --primary */
+  --text-inverse-muted: #94a3b8; /* Secondary text on --surface-dark. 7:1 */
+
+  /* Lines */
+  --border-subtle: #e2e8f0;    /* Dividers, card outlines */
+
+  /* Status */
+  --danger: #dc2626;           /* Error text and borders. 4.8:1 vs white */
+
+  /* ---------------------------------------------------------------------------
+   * Spacing — 4px base scale
+   * ------------------------------------------------------------------------ */
+  --space-xs: 0.25rem;         /*  4px */
+  --space-sm: 0.5rem;          /*  8px */
+  --space-md: 1rem;            /* 16px */
+  --space-lg: 1.5rem;          /* 24px */
+  --space-xl: 2rem;            /* 32px */
+  --space-2xl: 3rem;           /* 48px */
+
+  /* ---------------------------------------------------------------------------
+   * Layout
+   *   .container {
+   *     max-width: var(--container-max);
+   *     margin-inline: auto;
+   *     padding-inline: var(--gutter);
+   *   }
+   * ------------------------------------------------------------------------ */
+  --container-max: 1200px;
+  --gutter-mobile: 1rem;       /* 16px side padding on small screens */
+  --gutter-desktop: 2rem;      /* 32px side padding from 768px up */
+  --gutter: var(--gutter-mobile);
+
+  /* ---------------------------------------------------------------------------
+   * Motion
+   *   transition: background-color var(--transition-fast);
+   * ------------------------------------------------------------------------ */
+  --transition-fast: 150ms ease;          /* Hover, focus, color changes */
+  --transition-smooth: 250ms ease-in-out; /* Menus, accordions, transforms */
+
+  /* ---------------------------------------------------------------------------
+   * Radius
+   * ------------------------------------------------------------------------ */
+  --radius-sm: 0.25rem;        /*  4px — inputs, tags */
+  --radius-md: 0.5rem;         /*  8px — buttons, cards */
+  --radius-lg: 0.75rem;        /* 12px — feature cards, modals */
+  --radius-full: 9999px;       /* Pills, avatars */
+
+  /* ---------------------------------------------------------------------------
+   * Elevation
+   * ------------------------------------------------------------------------ */
+  --shadow-sm: 0 1px 2px 0 rgb(15 23 42 / 0.05);
+  --shadow-md:
+    0 4px 6px -1px rgb(15 23 42 / 0.07),
+    0 2px 4px -2px rgb(15 23 42 / 0.05);
+  --shadow-lg:
+    0 12px 24px -6px rgb(15 23 42 / 0.1),
+    0 4px 8px -4px rgb(15 23 42 / 0.06);
+  --focus-ring: 0 0 0 3px rgb(37 99 235 / 0.4); /* Keyboard focus outline */
+}
+
+/* Wider gutters once there's room for them. */
+@media (min-width: 768px) {
+  :root {
+    --gutter: var(--gutter-desktop);
+  }
+}
+
+/* Honor the OS-level reduced-motion setting. 0.01ms (rather than 0) keeps
+   transitionend events firing for any script that listens for them. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0.01ms linear;
+    --transition-smooth: 0.01ms linear;
+  }
+}
