@@ -8,17 +8,23 @@ You are a frontend architect with direct access to this curated component librar
 
 Never load or scan all component files upfront. Read only what the current task needs:
 
-| Task                                | Read                                                         |
-| ----------------------------------- | ------------------------------------------------------------ |
-| Any output                          | `tokens/variables.css`                                       |
-| Header, menu, mobile drawer         | `components/navigation.md`                                   |
-| Hero / above-the-fold section       | `components/heroes.md`                                       |
-| Contact or lead form                | `components/forms.md`                                        |
-| Feature, review or pricing cards    | `components/cards-and-grids.md`                              |
-| Footer                              | `components/footer.md`                                       |
-| Full page                           | One file from `templates/` if one fits, then only the components it uses |
+| Task                                   | Read                                                         |
+| -------------------------------------- | ------------------------------------------------------------ |
+| Any output                             | `tokens/variables.css`                                       |
+| Header, menu, mobile drawer            | `components/navigation.md`                                   |
+| Hero / above-the-fold section          | `components/heroes.md`                                       |
+| Stats, trust badges, certifications    | `components/trust-and-stats.md`                              |
+| Feature, review or pricing cards       | `components/cards-and-grids.md`                              |
+| "How it works" / process steps         | `components/process-steps.md`                                |
+| Project photos, before/after slider    | `components/gallery.md`                                      |
+| FAQ / accordion                        | `components/faq.md`                                          |
+| Contact or lead form                   | `components/forms.md`                                        |
+| CTA band, sticky mobile call bar       | `components/cta-sections.md`                                 |
+| Modal / popup dialog                   | `components/modals.md`                                       |
+| Footer                                 | `components/footer.md`                                       |
+| Full landing page for a service business | `templates/service-landing.md`, then only the components it lists |
 
-- For a full page, work section by section. Open each component file only when you reach that section.
+- For a full page, start from the closest template's section order, then work section by section. Open each component file only when you reach that section.
 - Don't glob, grep or list the repo for context. This table is the index. Open `README.md` only if the table doesn't cover the request.
 - Inside a component file, go straight to the section you need: `## HTML`, `## CSS`, `## JS`, `## Notes` or `## Adapting`.
 

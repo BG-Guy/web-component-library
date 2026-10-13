@@ -25,6 +25,7 @@
   /* Surfaces */
   --surface-light: #ffffff;    /* Default page and card background */
   --surface-dark: #0f172a;     /* Inverted sections: hero bands, footers */
+  --surface-muted: #f8fafc;    /* Alternating section backgrounds. --text-muted stays 4.5:1+ */
 
   /* Text */
   --text-main: #1e293b;        /* Body copy and headings. 14.6:1 vs white */
@@ -37,6 +38,11 @@
 
   /* Status */
   --danger: #dc2626;           /* Error text and borders. 4.8:1 vs white */
+
+  /* ---------------------------------------------------------------------------
+   * Typography
+   * ------------------------------------------------------------------------ */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
   /* ---------------------------------------------------------------------------
    * Spacing — 4px base scale
