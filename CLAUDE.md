@@ -4,9 +4,38 @@
 
 You are a frontend architect with direct access to this curated component library. Its modules are your primary blueprint and source of truth when designing pages. Start from the matching pattern and adapt it. Don't invent a new pattern when one already exists here.
 
+**Premium first.** `components/premium/` holds the flagship components: modern design, rich motion, one component per file. When a premium component fits the section, use it. Fall back to the base library below only for what premium doesn't cover. Premium components share one visual language (deep surfaces, gradient light, `--font-display`, spring motion), so mixing them keeps a page coherent.
+
 ## Progressive disclosure
 
-Never load or scan all component files upfront. Read only what the current task needs:
+Never load or scan all component files upfront. Read only what the current task needs.
+
+### Premium components (`components/premium/`, one component per file)
+
+| Section or need                                  | Read                                      |
+| ------------------------------------------------ | ----------------------------------------- |
+| Header: floating glass bar, mobile circle-reveal menu | `components/premium/floating-navbar.md` |
+| Dropdown / mega menu that morphs between menus   | `components/premium/morphing-dropdown.md` |
+| Hero (dark, aurora light, dashboard mock)        | `components/premium/aurora-hero.md`       |
+| Animated headings: word rise, highlighter, underline draw, scroll-lit paragraph | `components/premium/kinetic-headline.md` |
+| Buttons with micro-interactions                  | `components/premium/premium-buttons.md`   |
+| Features / benefits section                      | `components/premium/bento-grid.md`        |
+| Partner / client logos                           | `components/premium/logo-marquee.md`      |
+| Reviews / testimonials                           | `components/premium/testimonial-wall.md`  |
+| Pricing with monthly/yearly                      | `components/premium/pricing-plans.md`     |
+| Headline numbers / stats                         | `components/premium/stat-counters.md`     |
+| FAQ                                              | `components/premium/smooth-accordion.md`  |
+| Product tour / feature tabs                      | `components/premium/feature-tabs.md`      |
+| How it works / process (scroll-linked)           | `components/premium/scroll-timeline.md`   |
+| Scrollytelling with a pinned visual              | `components/premium/sticky-showcase.md`   |
+| Project / portfolio carousel                     | `components/premium/drag-carousel.md`     |
+| Photo gallery with full-screen viewer            | `components/premium/lightbox-gallery.md`  |
+| Booking or any modal dialog / bottom sheet       | `components/premium/spring-modal.md`      |
+| Notifications / toasts                           | `components/premium/toast-stack.md`       |
+| Contact / lead form                              | `components/premium/floating-label-form.md` |
+| Closing CTA + footer                             | `components/premium/cta-footer.md`        |
+
+### Base library
 
 | Task                                                             | Read                                   |
 | ---------------------------------------------------------------- | -------------------------------------- |
@@ -44,7 +73,8 @@ Never load or scan all component files upfront. Read only what the current task 
 
 - For a full page, start from the closest template's section order, then work section by section. Open each component file only when you reach that section.
 - Don't glob, grep or list the repo for context. This table is the index. Open `README.md` only if the table doesn't cover the request.
-- Single-pattern files: go straight to `## HTML`, `## CSS`, `## JS`, `## Notes` or `## Adapting`.
+- Single-pattern files (including every premium file): go straight to `## HTML`, `## CSS`, `## JS`, `## Notes` or `## Adapting`.
+- Premium components need the premium tokens in `tokens/variables.css` and look as intended with Geist + Geist Mono loaded (Google Fonts). Without them they fall back to the system font.
 - Multi-pattern files open with a numbered pattern table. Read the table, then only the `## N. <Pattern>` section you need; each section is self-contained. In `buttons.md` and `navbar-variants.md`, pattern 1 is a base the others build on, so read it too.
 
 ## Execution constraints

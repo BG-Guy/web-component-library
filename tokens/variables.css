@@ -95,6 +95,64 @@
     0 12px 24px -6px rgb(15 23 42 / 0.1),
     0 4px 8px -4px rgb(15 23 42 / 0.06);
   --focus-ring: 0 0 0 3px rgb(37 99 235 / 0.4); /* Keyboard focus outline */
+
+  /* ===========================================================================
+   * Premium layer: used by components/premium/*, safe to use anywhere
+   * ======================================================================== */
+
+  /* Brand gradient, deep surfaces and glass */
+  --primary-2: #0d9488;          /* Gradient partner for --primary. 3.7:1 vs white: large text only */
+  --gradient-brand: linear-gradient(135deg, var(--primary) 0%, var(--primary-2) 100%);
+  --surface-deep: #070b14;       /* Deepest dark: heroes, menus, footers */
+  --border-inverse: rgb(255 255 255 / 0.1);   /* Hairlines on dark surfaces */
+  --glass: color-mix(in srgb, var(--surface-light) 72%, transparent);
+  --glass-inverse: rgb(255 255 255 / 0.05);   /* Raised panels on dark surfaces */
+  --highlight: inset 0 1px 0 rgb(255 255 255 / 0.5);          /* Top-edge sheen, light */
+  --highlight-inverse: inset 0 1px 0 rgb(255 255 255 / 0.08); /* Top-edge sheen, dark */
+
+  /* Display and mono type. Load Geist + Geist Mono (Google Fonts) for the intended look;
+     without them these fall back to the system stack. */
+  --font-display: "Geist", var(--font-sans);
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --tracking-tight: -0.03em;
+  --tracking-display: -0.045em;
+
+  /* Motion: durations collapse under reduced motion (below) */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);       /* Entrances, morphs, glides */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);   /* Loops, crossfades */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* Overshoot; a true spring replaces it below */
+  --dur-1: 120ms;  /* Presses, colour */
+  --dur-2: 200ms;  /* Hovers */
+  --dur-3: 320ms;  /* Toggles, small moves */
+  --dur-4: 560ms;  /* Entrances, morphs */
+  --dur-5: 900ms;  /* Large reveals */
+  --stagger: 60ms; /* Delay step between sibling entrances */
+
+  /* Shape and depth */
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --shadow-xl:
+    0 1px 2px rgb(15 23 42 / 0.04),
+    0 12px 32px -8px rgb(15 23 42 / 0.12),
+    0 32px 64px -16px rgb(15 23 42 / 0.16);
+  --shadow-glow: 0 10px 40px -10px color-mix(in srgb, var(--primary) 60%, transparent);
+  --blur-md: 16px;
+  --blur-lg: 48px;
+
+  /* Stacking order */
+  --z-sticky: 30;
+  --z-overlay: 40;
+  --z-banner: 50;
+  --z-toast: 60;
+  --z-popover: 70;
+}
+
+/* A real spring curve where linear() easing is supported */
+@supports (transition-timing-function: linear(0, 1)) {
+  :root {
+    --ease-spring: linear(0, 0.006, 0.025 2.8%, 0.101 6.1%, 0.539 18.9%, 0.721 25.3%, 0.849 31.5%,
+      0.937 38.1%, 0.968 41.8%, 0.991 45.7%, 1.006 50.1%, 1.015 55%, 1.017 63.9%, 1.001 85.9%, 1);
+  }
 }
 
 /* Wider gutters once there's room for them. */
@@ -110,5 +168,11 @@
   :root {
     --transition-fast: 0.01ms linear;
     --transition-smooth: 0.01ms linear;
+    --dur-1: 0.01ms;
+    --dur-2: 0.01ms;
+    --dur-3: 0.01ms;
+    --dur-4: 0.01ms;
+    --dur-5: 0.01ms;
+    --stagger: 0ms;
   }
 }
