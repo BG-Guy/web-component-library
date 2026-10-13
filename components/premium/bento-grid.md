@@ -44,9 +44,9 @@ Feature section in a bento layout. A spotlight and a glowing border follow the c
 
       <li class="bento__card">
         <div class="bento__visual bento__visual--quotes" aria-hidden="true">
-          <div class="bento__quote" style="--n: 0; --d: 2"><span>Water heater</span><strong>$1,180</strong></div>
-          <div class="bento__quote" style="--n: 2; --d: 1"><span>Drain clean</span><strong>$95</strong></div>
-          <div class="bento__quote" style="--n: 1; --d: 0"><span>Leak repair</span><strong>$149</strong><em>Approved</em></div>
+          <div class="bento__quote" style="--bento-n: 0; --bento-d: 2"><span>Water heater</span><strong>$1,180</strong></div>
+          <div class="bento__quote" style="--bento-n: 2; --bento-d: 1"><span>Drain clean</span><strong>$95</strong></div>
+          <div class="bento__quote" style="--bento-n: 1; --bento-d: 0"><span>Leak repair</span><strong>$149</strong><em>Approved</em></div>
         </div>
         <div class="bento__body">
           <h3 class="bento__card-title">Quotes in minutes</h3>
@@ -225,15 +225,15 @@ Feature section in a bento layout. A spotlight and a glowing border follow the c
   grid-area: 1 / 1; display: grid; gap: 0.25rem; width: 9rem; padding: 0.875rem 1rem; border-radius: 1rem;
   background: var(--bento-float); color: var(--bento-text);
   box-shadow: inset 0 0 0 1px var(--bento-line), 0 14px 28px -14px color-mix(in srgb, var(--surface-deep) 90%, transparent);
-  --spread: 1;
-  transform: translateX(calc((var(--n) - 1) * 58% * var(--spread))) translateY(calc((var(--n) - 1) * (var(--n) - 1) * 10px)) rotate(calc((var(--n) - 1) * 9deg * var(--spread)));
-  transition: transform var(--dur-5) var(--ease-spring); transition-delay: calc(var(--d) * 60ms);
+  --bento-spread: 1;
+  transform: translateX(calc((var(--bento-n) - 1) * 58% * var(--bento-spread))) translateY(calc((var(--bento-n) - 1) * (var(--bento-n) - 1) * 10px)) rotate(calc((var(--bento-n) - 1) * 9deg * var(--bento-spread)));
+  transition: transform var(--dur-5) var(--ease-spring); transition-delay: calc(var(--bento-d) * 60ms);
 }
 @supports (backdrop-filter: blur(1px)) { .bento__quote { backdrop-filter: blur(10px); } }
 .bento__quote span { color: var(--bento-muted); font-size: 0.75rem; }
 .bento__quote strong { font: 600 1.25rem/1 var(--font-display); letter-spacing: -0.02em; }
 .bento__quote em { justify-self: start; margin-top: 0.25rem; padding: 0.125rem 0.5rem; border-radius: 999px; background: color-mix(in srgb, var(--success) 22%, transparent); font-size: 0.6875rem; font-style: normal; font-weight: 600; }
-.bento__card:hover .bento__quote { --spread: 1.18; }
+.bento__card:hover .bento__quote { --bento-spread: 1.18; }
 
 /* 3. Rating: number, stars fill left to right */
 .bento__visual--rating { display: grid; place-content: center; justify-items: center; gap: 0.25rem; }
@@ -293,7 +293,7 @@ Feature section in a bento layout. A spotlight and a glowing border follow the c
 /* Start states: only once JS is running and only until each card has been seen */
 .bento--js .bento__card:not(.bento__card--in) .bento__route { stroke-dashoffset: 1; }
 .bento--js .bento__card:not(.bento__card--in) .bento__chip--arrived { opacity: 0; transform: scale(0.8) translateY(6px); }
-.bento--js .bento__card:not(.bento__card--in) .bento__quote { --spread: 0; transform: translateY(calc(var(--d) * -8px)) scale(calc(1 - var(--d) * 0.06)); }
+.bento--js .bento__card:not(.bento__card--in) .bento__quote { --bento-spread: 0; transform: translateY(calc(var(--bento-d) * -8px)) scale(calc(1 - var(--bento-d) * 0.06)); }
 .bento--js .bento__card:not(.bento__card--in) .bento__stars-fill { width: 0%; }
 .bento--js .bento__card:not(.bento__card--in) .bento__bars span { transform: scaleY(0.08); }
 .bento--js .bento__card:not(.bento__card--in) .bento__tag { opacity: 0; transform: translateY(-10px); }

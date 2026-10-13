@@ -79,7 +79,7 @@ Dark, cinematic hero. Slow-drifting aurora light and a fading grid sit behind a 
 ## CSS
 
 ```css
-@property --aurora-angle { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+@property --aurora-hero-angle { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
 
 /* Section and sky */
 .aurora-hero {
@@ -125,7 +125,7 @@ Dark, cinematic hero. Slow-drifting aurora light and a fading grid sit behind a 
   padding: 0.3125rem 0.875rem 0.3125rem 0.3125rem; border: 1px solid transparent; border-radius: 999px;
   background:
     linear-gradient(color-mix(in srgb, var(--surface-deep) 85%, transparent), color-mix(in srgb, var(--surface-deep) 85%, transparent)) padding-box,
-    conic-gradient(from var(--aurora-angle), var(--border-inverse) 0 55%, var(--primary-2) 72%, var(--primary) 82%, var(--border-inverse) 95%) border-box;
+    conic-gradient(from var(--aurora-hero-angle), var(--border-inverse) 0 55%, var(--primary-2) 72%, var(--primary) 82%, var(--border-inverse) 95%) border-box;
   color: var(--text-inverse-muted); font-size: 0.875rem; text-decoration: none;
   animation: aurora-rise var(--dur-5) var(--ease-out) 100ms both, aurora-spin 5s linear infinite;
   transition: color var(--dur-2);
@@ -279,7 +279,7 @@ Dark, cinematic hero. Slow-drifting aurora light and a fading grid sit behind a 
   50% { transform: translate3d(8%, 6%, 0) scale(1.12); }
   100% { transform: translate3d(-6%, 10%, 0) scale(0.94); }
 }
-@keyframes aurora-spin { to { --aurora-angle: 360deg; } }
+@keyframes aurora-spin { to { --aurora-hero-angle: 360deg; } }
 @keyframes aurora-rise { from { opacity: 0; transform: translateY(0.45em); filter: blur(10px); } }
 @keyframes aurora-card-in { from { opacity: 0; scale: 0.94; filter: blur(8px); } }
 @keyframes aurora-float { to { translate: 0 -10px; } }
