@@ -2,7 +2,7 @@
 
 A collection of modular, battle-tested UI patterns for marketing and local-service sites, built on a shared set of design tokens.
 
-- **`components/premium/`**: 20 flagship components with modern design and rich motion: floating glass navbar, morphing mega menu, aurora hero, bento grid, odometer stats, scroll-linked timeline, sticky scrollytelling, shared-element lightbox, spring modal, stacked toasts and more. Start here.
+- **`components/premium/`**: 100 flagship components with modern design and rich motion, in eleven groups: navigation and menus, heroes, headlines and type, scroll stories, blending sections, content sections, cards and galleries, forms and booking, feedback and utilities, retro styles, and footers. Start here; the [premium index](#premium-index) lists every file.
 - **The base library**: 117 simpler patterns covering everything else: navigation (desktop and mobile), sections, cards, carousels, forms and controls, feedback, buttons, backgrounds, animations and transitions, plus full-page scaffolds.
 
 Every module is self-contained. It depends only on `tokens/variables.css`, so you can lift a single pattern into a project without pulling in the rest of the library.
@@ -18,27 +18,7 @@ web-component-library/
 ├── tokens/
 │   └── variables.css            Design variables: color, type, spacing, layout, motion, radius, elevation
 ├── components/
-│   ├── premium/                 20 flagship components, one per file (start here)
-│   │   ├── aurora-hero.md            Dark hero: drifting aurora, word-by-word rise, tilting dashboard card
-│   │   ├── bento-grid.md             Feature bento with cursor spotlight and one-shot animated stories
-│   │   ├── cta-footer.md             Closing CTA, sliding-underline columns, newsletter, rising wordmark
-│   │   ├── drag-carousel.md          Full-bleed project carousel: drag + fling, scroll-driven edge fade
-│   │   ├── feature-tabs.md           Product tour tabs: spring indicator, assembling mocks, autoplay
-│   │   ├── floating-label-form.md    Lead form: floating labels, valid ticks, error slide + shake, morphing submit
-│   │   ├── floating-navbar.md        Glass navbar that tightens on scroll, hover pill, circle-reveal menu
-│   │   ├── kinetic-headline.md       Word rise, highlighter sweep, underline draw, scroll-lit paragraph
-│   │   ├── lightbox-gallery.md       Mosaic gallery; thumbnails morph into a viewer (View Transitions)
-│   │   ├── logo-marquee.md           Two-way logo marquee with eased hover slow-down
-│   │   ├── morphing-dropdown.md      Stripe-style dropdowns: one background morphs between menus
-│   │   ├── premium-buttons.md        Shine, roll, arrow swap, magnetic, loading→success, like burst, glow
-│   │   ├── pricing-plans.md          Billing switch, rolling prices, featured plan with tracing border
-│   │   ├── scroll-timeline.md        How-it-works timeline whose line fills as you scroll
-│   │   ├── smooth-accordion.md       FAQ with interruptible height animation and plus→minus spring
-│   │   ├── spring-modal.md           Dialog that springs from its trigger; bottom sheet with drag-to-dismiss
-│   │   ├── stat-counters.md          Odometer digits, gradient rules, sparkline, ring and live pulse
-│   │   ├── sticky-showcase.md        Apple-style scrollytelling with a pinned, cross-fading device frame
-│   │   ├── testimonial-wall.md       Review columns drifting in opposite directions
-│   │   └── toast-stack.md            Sonner-style stacked toasts: fan-out, swipe, promise morph
+│   ├── premium/                 100 flagship components, one per file, in 11 groups (start here; see the premium index)
 │   ├── animations.md            Scroll reveals, progress bar, parallax, rotating words, skeletons, loaders [9]
 │   ├── backgrounds.md           Gradient mesh, patterns, grain, aurora, image scrim, dividers, video [9]
 │   ├── buttons.md               Base button system, icon, loading, toggle, segmented, split, FAB, copy [10]
@@ -72,6 +52,132 @@ web-component-library/
 | `tokens/`     | Colors, fonts, spacing, widths, transitions, radii or shadows. Always included. |
 | `components/` | One UI pattern: a navbar, a hero, a form, a card grid, a footer.         |
 | `templates/`  | A complete page: section order, page skeleton and the modules to use.    |
+
+## Premium index
+
+Every premium file is one self-contained component in `components/premium/`. Groups match the gallery and the table in `CLAUDE.md`.
+
+**Navigation and menus**
+- `floating-navbar.md`: glass navbar that tightens on scroll, hover pill, circle-reveal mobile menu
+- `morphing-dropdown.md`: Stripe-style dropdowns; one background morphs between menus
+- `split-menu.md`: full-screen menu, numbered links rising from masks, preview pane wiping between links
+- `curtain-menu.md`: menu background built from strips that fall like curtain slats
+- `perspective-menu.md`: the page tilts back in 3D to reveal the menu beneath
+- `gooey-menu.md`: floating action button that oozes call/text/quote bubbles (SVG goo filter)
+- `radial-menu.md`: fan of quick actions on an arc, with press-and-drag selection
+- `dock-nav.md`: macOS-style magnifying dock as a bottom nav
+- `notch-tabbar.md`: bottom tab bar whose active icon rides a liquid notch
+- `island-nav.md`: Dynamic Island pill with live status that morphs into a menu card
+- `swipe-drawer.md`: side drawer that follows the finger, with fling and rubber-banding
+- `drilldown-menu.md`: iOS-settings-style multi-level menu with parallax slides
+- `command-palette.md`: ⌘K palette with fuzzy search, grouped results and actions
+
+**Heroes**
+- `aurora-hero.md`: dark hero; drifting aurora, word-by-word rise, tilting dashboard card
+- `beam-grid-hero.md`: dark technical grid with travelling light beams and a cursor spotlight
+- `search-hero.md`: "What needs fixing?" input with typed suggestions and a combobox of services
+- `tilted-wall-hero.md`: glass headline card over a 3D wall of scrolling project tiles
+- `orbit-hero.md`: services orbiting the brand mark on tilted rings
+- `reel-hero.md`: full-bleed photo slideshow with Ken Burns and story-style progress
+- `xray-hero.md`: a lens that follows the cursor and reveals the pipes and wiring behind the walls
+
+**Headlines and type**
+- `kinetic-headline.md`: word rise, highlighter sweep, underline draw, scroll-lit paragraph
+- `scramble-text.md`: headlines and links that decode from random glyphs
+- `weight-wave.md`: letters whose weight swells under the cursor (variable Geist)
+- `fill-text.md`: outlined statement that fills with the brand gradient line by line on scroll
+- `path-text.md`: text ribbons flowing along curved paths as you scroll
+- `circle-text.md`: circular text badges: scroll-rotating CTA, seal, scroll cue
+
+**Scroll stories**
+- `scroll-timeline.md`: how-it-works timeline whose line fills as you scroll
+- `sticky-showcase.md`: Apple-style scrollytelling with a pinned, cross-fading device frame
+- `horizontal-scroll.md`: pinned section; vertical scroll drives a row of project panels
+- `zoom-through.md`: inset photo opens to full screen as you scroll into it
+- `stacking-cards.md`: sticky cards that stack into a deck as the next one slides over
+- `text-mask-zoom.md`: fly through a giant cut-out word into the scene behind it
+- `wipe-gallery.md`: pinned frame where each photo wipes in with a different clip shape
+- `velocity-marquee.md`: huge type rows that speed up, flip and skew with scroll velocity
+- `column-parallax.md`: photo columns moving at different speeds around a sticky panel
+- `focus-list.md`: giant service list that lights the item crossing the centre
+- `depth-tunnel.md`: company milestones flying toward you in 3D
+- `scroll-compare.md`: before/after whose divider sweeps with scroll and stays draggable
+- `blueprint-draw.md`: house blueprint that draws itself, with callouts popping in
+- `parallax-scene.md`: illustrated neighbourhood that goes from dawn to day as the van parks
+
+**Blending sections**
+- `chameleon-sections.md`: page colours morph from section to section
+- `blend-text.md`: sticky giant wordmark that inverts over every section (`mix-blend-mode`)
+- `section-stack.md`: full sections slide over each other like a deck
+- `seam-melt.md`: sections dissolve into each other with soft seams, glow and grain
+- `liquid-divider.md`: layered wave divider that ripples with scroll
+- `curtain-split.md`: cover that slides apart like doors to reveal the section
+- `overlap-glass.md`: glass panels straddling two sections, tinted by both
+- `card-morph.md`: case-study card that morphs into a detail view (View Transitions)
+
+**Content sections**
+- `bento-grid.md`: feature bento with cursor spotlight and one-shot animated stories
+- `feature-tabs.md`: product tour tabs: spring indicator, assembling mocks, autoplay
+- `stat-counters.md`: odometer digits, gradient rules, sparkline, ring and live pulse
+- `pricing-plans.md`: billing switch, rolling prices, featured plan with tracing border
+- `smooth-accordion.md`: FAQ with interruptible height animation and plus→minus spring
+- `logo-marquee.md`: two-way logo marquee with eased hover slow-down
+- `testimonial-wall.md`: review columns drifting in opposite directions
+
+**Cards and galleries**
+- `drag-carousel.md`: full-bleed project carousel: drag + fling, scroll-driven edge fade
+- `lightbox-gallery.md`: mosaic gallery; thumbnails morph into a viewer (View Transitions)
+- `holo-card.md`: membership card with holographic foil, glare, tilt and flip
+- `swipe-deck.md`: swipeable stack of review cards with fling
+- `expand-panels.md`: row of image panels; the active one springs open
+- `hover-preview-list.md`: editorial project list with a cursor-following image preview
+- `coverflow.md`: 3D coverflow with reflections, drag and fling
+- `wallet-pass.md`: appointment pass that slides out of a wallet and flips
+- `hotspot-explorer.md`: house cutaway with hotspots that open anchored popovers
+- `crew-cards.md`: team cards with morphing blob portraits and rolling job counts
+- `infinite-canvas.md`: gallery canvas you drag in any direction, wrapping endlessly
+- `folder-stack.md`: case studies as tabbed folders that shuffle forward
+
+**Forms and booking**
+- `floating-label-form.md`: lead form: floating labels, valid ticks, error slide + shake, morphing submit
+- `quote-wizard.md`: multi-step estimate with sliding steps and a live price pill
+- `booking-calendar.md`: date grid plus time slots, with a confirm button that morphs to a check
+- `estimate-calculator.md`: sliders and options driving a rolling total and breakdown bar
+- `coverage-checker.md`: ZIP / neighbourhood checker with a map, pin drop and result card
+- `job-tracker.md`: "your technician is on the way" map, ETA and stage stepper
+- `otp-input.md`: six-digit code with sliding caret, paste ripple and success morph
+- `file-drop.md`: photo upload with fanning cards, thumbnails and progress rings
+- `star-rating.md`: star rating with a face that morphs from frown to grin
+
+**Feedback and utilities**
+- `premium-buttons.md`: shine, roll, arrow swap, magnetic, loading→success, like burst, glow
+- `spring-modal.md`: dialog that springs from its trigger; bottom sheet with drag-to-dismiss
+- `toast-stack.md`: Sonner-style stacked toasts: fan-out, swipe, promise morph
+- `chat-widget.md`: launcher that morphs into a support chat with typing and quick replies
+- `confetti.md`: `window.confetti()` bursts in brand colours
+- `theme-switch.md`: sun/moon switch with a circular View Transition reveal
+- `custom-cursor.md`: dot-and-ring cursor with labels and magnetic targets
+
+**Retro styles**
+- `crt-terminal.md`: CRT monitor that boots up and runs real commands
+- `pixel-arcade.md`: 8-bit UI: pixel buttons, HP bar, RPG dialog, high scores
+- `win95-window.md`: Windows 95 desktop with draggable windows, taskbar and start menu
+- `synthwave-hero.md`: outrun hero: striped sun, neon grid, chrome headline
+- `vhs-glitch.md`: VHS title card with OSD, tracking bands and RGB split
+- `neo-brutalist.md`: thick borders, hard shadows, stickers and pressable cards
+- `swiss-poster.md`: International Typographic Style section with a drawn grid
+- `groovy-70s.md`: sunburst, wavy stripes and a coupon card, est. 1974
+- `skeuo-thermostat.md`: tactile thermostat dial with detents and mode rockers
+- `split-flap.md`: Solari departures board announcing availability
+
+**Footers**
+- `cta-footer.md`: closing CTA, sliding-underline columns, newsletter, rising wordmark
+- `reveal-footer.md`: the page lifts like a sheet to uncover the footer
+- `circle-footer.md`: footer floods in through a circle grown from the CTA
+- `type-footer.md`: giant wordmark whose letters swell under the cursor
+- `unfold-footer.md`: footer unfolds in three paper panels
+- `curve-footer.md`: curved page edge that flattens as the footer rises
+- `marquee-footer.md`: huge marquee CTA with a magnetic button, hours and back-to-top ring
 
 ## Usage guidelines
 
@@ -141,11 +247,11 @@ For the intended premium look, load the fonts once per page:
   - Single-pattern files use `## HTML`, `## CSS`, `## JS` (if needed) and `## Notes`.
   - Multi-pattern files open with a numbered pattern table, then one self-contained `## N. <Pattern>` section each, with `### HTML/CSS/JS/Notes`.
 - Depend only on `tokens/variables.css`. Every class in a pattern starts with that pattern's root class (`.site-header__*`, `.carousel-snap__*`) so modules can be combined without collisions. The one exception is state classes (`is-active`, `is-reached`), which are only ever used together with a component class, e.g. `.feature-tabs__panel.is-active`.
-- Premium components live one per file in `components/premium/`. They use the premium tokens for motion (`--ease-spring`, `--dur-*`), so reduced motion is handled at the token level; loops and keyframes still need their own reduced-motion rule.
-- No hard-coded colors, spacing, radii or shadows. If a value is missing, add a token.
+- Premium components live one per file in `components/premium/`: a title, a short description, a `**Motion:**` line, an optional `**Fonts:**` line (any Google Font beyond Geist, with its URL), then `## HTML`, `## CSS`, `## JS` and `## Notes`. Every class, custom property, keyframe and id starts with the component's root. They use the premium tokens for motion (`--ease-spring`, `--dur-*`), so reduced motion is handled at the token level; loops and keyframes still need their own reduced-motion rule.
+- No hard-coded colors, spacing, radii or shadows. If a value is missing, add a token. The one exception is themed premium components (retro styles, holographic foil): they may declare a local palette as `--root-*` custom properties on their root and use only those variables.
 - Transitions use the motion tokens. Keyframe animations may use literal durations, but every animation must stop under `prefers-reduced-motion`, and anything that moves for more than 5s needs a pause control.
 - Build mobile-first with `min-width` queries. 768px is the main breakpoint; add 1024px only when the layout needs it.
 - Stacking order for fixed and overlay elements: content 0–5 · nav backdrop 10 · drawers 20 · sticky header 30 · full-screen menus 40 · banners 50 · toasts 60 · tooltips 70 · skip link 100.
 - Templates hold only the section order, page skeleton and page-level CSS. They point to component files instead of copying them.
 - Keep commentary short. These files are read by people and by AI tools, so every line should earn its place.
-- Add every new module to the directory map above and to the table in `CLAUDE.md`.
+- Add every new module to the directory map above (premium components go in the premium index) and to the table in `CLAUDE.md`.
