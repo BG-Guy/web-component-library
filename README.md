@@ -7,6 +7,18 @@ A collection of modular, battle-tested UI patterns for marketing and local-servi
 
 Every module is self-contained. It depends only on `tokens/variables.css`, so you can lift a single pattern into a project without pulling in the rest of the library.
 
+## Live gallery
+
+`docs/index.html` is a single-page gallery with a live preview of every pattern, phone/tablet/full-width toggles and the code for each. It's served by GitHub Pages from the `docs/` folder on `main`. Open it locally in any browser too.
+
+After changing a component, rebuild it from the repo root:
+
+```
+python3 tools/gallery/build_gallery.py . tools/gallery/shell.html docs/index.html
+```
+
+New premium components also need an entry in `PREMIUM_GROUPS` (and `PREMIUM_FRAME` if they need a fixed-height or phone-width preview) in `tools/gallery/build_gallery.py`.
+
 ## Directory map
 
 The number in brackets is how many patterns each file holds.
@@ -15,6 +27,8 @@ The number in brackets is how many patterns each file holds.
 web-component-library/
 ├── CLAUDE.md                    Instructions for Claude sessions that use this repo
 ├── README.md                    You are here: index and usage rules
+├── docs/index.html              Live gallery of every pattern (GitHub Pages)
+├── tools/gallery/               Gallery builder: build_gallery.py + shell.html
 ├── tokens/
 │   └── variables.css            Design variables: color, type, spacing, layout, motion, radius, elevation
 ├── components/

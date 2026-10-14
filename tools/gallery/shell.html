@@ -1,0 +1,374 @@
+<title>Web Component Library</title>
+<style>
+:root {
+  /* Layout: sticky file index on the left, one column of live pattern cards on the right */
+  --bg: #f3f5f9;
+  --panel: #ffffff;
+  --ink: #0f172a;
+  --muted: #566073;
+  --line: #dbe1ea;
+  --accent: #2563eb;
+  --on-accent: #ffffff;
+  --accent-soft: #e4ecfb;
+  --stage: #e6eaf1;
+  --canvas: #ffffff; /* preview canvas: components are designed light, so it stays white in both themes */
+  --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0c1016; --panel: #141a23; --ink: #e6ebf2; --muted: #9da8b8; --line: #263040;
+    --accent: #7eabff; --on-accent: #0c1016; --accent-soft: #1b2741; --stage: #1a212c;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0c1016; --panel: #141a23; --ink: #e6ebf2; --muted: #9da8b8; --line: #263040;
+  --accent: #7eabff; --on-accent: #0c1016; --accent-soft: #1b2741; --stage: #1a212c;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.55 var(--font-ui); }
+a { color: var(--accent); }
+code { font-family: var(--font-mono); font-size: 0.88em; }
+button, input { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Header: name, counts and search */
+.top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+  background: var(--bg); border-bottom: 1px solid var(--line);
+}
+@supports (backdrop-filter: blur(1px)) {
+  .top { background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); }
+}
+.top__inner {
+  max-width: 1440px; margin: 0 auto; padding: 12px 16px;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px;
+}
+.brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.brand__mark {
+  flex: none; width: 34px; height: 34px; border-radius: 8px; background: var(--accent);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 3px; padding: 7px;
+}
+.brand__mark span { border-radius: 2px; background: var(--on-accent); opacity: 0.9; }
+.brand__mark span:nth-child(4) { opacity: 0.45; }
+.brand h1 { margin: 0; font-size: 18px; line-height: 1.2; letter-spacing: -0.01em; }
+.brand p { margin: 2px 0 0; font-size: 13px; color: var(--muted); }
+.search { display: flex; align-items: center; gap: 10px; flex: 1 1 260px; max-width: 420px; }
+.search input {
+  width: 100%; min-height: 38px; padding: 6px 12px;
+  border: 1px solid var(--line); border-radius: 8px; background: var(--panel);
+}
+.search input::placeholder { color: var(--muted); }
+.count { flex: none; font: 12px var(--font-mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* Page grid */
+.layout { max-width: 1440px; margin: 0 auto; padding: 24px 16px 80px; display: grid; gap: 28px; }
+@media (min-width: 1000px) {
+  .layout { grid-template-columns: 236px minmax(0, 1fr); gap: 40px; }
+  .index { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 88px); align-self: start;
+           max-height: calc(100vh - 110px); overflow: auto; }
+  .index summary { display: none; }
+}
+
+/* File index */
+.index details { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; }
+.index summary { cursor: pointer; padding: 10px 14px; font-weight: 600; }
+@media (min-width: 1000px) { .index details { background: none; border: 0; } }
+.index__body { display: grid; gap: 18px; padding: 4px 14px 14px; }
+@media (min-width: 1000px) { .index__body { padding: 0; } }
+.index__group { margin: 0 0 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.index ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; }
+.index a {
+  display: flex; justify-content: space-between; gap: 8px; padding: 5px 8px; border-radius: 6px;
+  color: var(--ink); text-decoration: none; font-size: 14px;
+}
+.index a:hover { background: var(--accent-soft); }
+.index a .n { font: 12px var(--font-mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.index a.is-empty { opacity: 0.4; }
+
+/* Notice */
+.note { margin: 0; padding: 10px 14px; border: 1px dashed var(--line); border-radius: 10px; color: var(--muted); font-size: 13px; }
+
+/* File sections */
+main { display: grid; gap: 56px; min-width: 0; }
+.file { display: grid; gap: 16px; scroll-margin-top: 96px; min-width: 0; }
+.file__head { display: grid; gap: 6px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.file__eyebrow { margin: 0; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.file__head h2 { margin: 0; font-size: 26px; line-height: 1.15; letter-spacing: -0.015em; text-wrap: balance; }
+.file__desc { margin: 0; max-width: 72ch; color: var(--muted); }
+.path { font: 12.5px var(--font-mono); color: var(--muted); }
+
+/* Pattern cards */
+.card {
+  display: grid; gap: 12px; padding: 16px; min-width: 0;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 12px; scroll-margin-top: 96px;
+}
+.card__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 12px; }
+.card__title { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
+.card__num { font: 600 13px var(--font-mono); color: var(--accent); font-variant-numeric: tabular-nums; }
+.card h3 { margin: 0; font-size: 17px; line-height: 1.3; }
+.card h3 a { color: inherit; text-decoration: none; }
+.card h3 a:hover { text-decoration: underline; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { padding: 4px 8px; border-radius: 999px; background: var(--accent-soft); font: 500 11.5px var(--font-mono); white-space: nowrap; }
+.card__desc { margin: 0; max-width: 78ch; color: var(--muted); }
+.card__desc code, .file__desc code { padding: 1px 4px; border-radius: 4px; background: var(--stage); color: var(--ink); }
+
+/* Toolbar */
+.bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.seg button, .tool {
+  min-height: 32px; padding: 4px 12px; border: 0; background: transparent; color: var(--muted);
+  font-size: 13px; font-weight: 500; cursor: pointer;
+}
+.seg button + button { border-left: 1px solid var(--line); }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); }
+.tool { border: 1px solid var(--line); border-radius: 8px; }
+.tool:hover, .seg button:not([aria-pressed="true"]):hover { color: var(--ink); background: var(--accent-soft); }
+.tool[aria-expanded="true"] { color: var(--ink); background: var(--accent-soft); }
+
+/* Preview stage */
+.stage { display: flex; justify-content: center; padding: 12px; border-radius: 10px; background: var(--stage); overflow: hidden; }
+.stage iframe {
+  display: block; width: 100%; max-width: 100%; height: 160px;
+  border: 1px solid var(--line); border-radius: 8px; background: var(--canvas);
+}
+.stage[data-w="phone"] iframe { width: 390px; }
+.stage[data-w="tablet"] iframe { width: 768px; }
+.stage__label { align-self: center; color: var(--muted); font-size: 13px; }
+
+/* Code viewer */
+.code { display: grid; gap: 10px; min-width: 0; }
+.code__block { min-width: 0; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.code__head {
+  display: flex; justify-content: space-between; align-items: center; gap: 8px;
+  padding: 4px 4px 4px 12px; background: var(--stage); font: 600 12px var(--font-mono);
+}
+.code__head .tool { min-height: 28px; font-size: 12px; }
+.code pre {
+  margin: 0; padding: 12px; max-height: 440px; overflow: auto;
+  background: var(--panel); color: var(--ink); font: 12.5px/1.5 var(--font-mono); tab-size: 2;
+}
+
+.empty { padding: 40px 16px; text-align: center; color: var(--muted); }
+</style>
+
+<header class="top">
+  <div class="top__inner">
+    <div class="brand">
+      <div class="brand__mark" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+      <div>
+        <h1>Web Component Library</h1>
+        <p>__TOTAL__ patterns in __FILES__ files, rendered live from <code>components/</code>. Premium first.</p>
+      </div>
+    </div>
+    <div class="search" role="search">
+      <label for="q" class="sr">Search patterns</label>
+      <input id="q" type="search" placeholder="Search patterns, e.g. carousel, toast, mega" autocomplete="off">
+      <span class="count" id="count" aria-live="polite"></span>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <nav class="index" aria-label="Component files">
+    <details id="index" open>
+      <summary>Browse all __FILES__ files</summary>
+      <div class="index__body" id="index-body"></div>
+    </details>
+  </nav>
+  <main id="main">
+    <p class="note">The <strong>Premium</strong> group comes first: 20 flagship components with full motion. Hover, click, scroll inside and resize them. Each preview is the pattern's own HTML, CSS and JS running in an isolated frame with the library tokens. Photos are labelled placeholders, and links and form submissions are disabled inside previews. Use Phone, Tablet and Full to check breakpoints; Reset reloads a preview.</p>
+  </main>
+</div>
+
+<script type="application/json" id="data">__DATA__</script>
+<script>
+(() => {
+  const data = JSON.parse(document.getElementById('data').textContent);
+  const main = document.getElementById('main');
+  const indexBody = document.getElementById('index-body');
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const patterns = new Map();   // pattern id -> pattern data
+  const frames = new Map();     // numeric frame id -> { iframe, p }
+  let frameSeq = 0;
+
+  // Base styles inside every preview: library body defaults plus demo helpers
+  const BASE = `*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:var(--font-sans);font-size:1rem;line-height:1.6;color:var(--text-main);background:var(--surface-light)}
+img,video{max-width:100%;height:auto}
+iframe[src="about:blank"]{background:var(--border-subtle)}
+.demo-pad{max-width:var(--container-max);margin-inline:auto;padding:2rem var(--gutter)}
+.demo-filler{max-width:var(--container-max);margin-inline:auto;padding:2rem var(--gutter) 3rem;color:var(--text-muted)}
+.demo-filler h2{margin:2rem 0 .5rem;color:var(--text-main);font-size:1.25rem}
+.demo-filler p{max-width:60ch;margin:0 0 1rem}
+.demo-art{height:20rem;border-radius:1.5rem;margin-bottom:1rem;background:radial-gradient(55% 75% at 18% 22%,#5eead4cc,transparent 62%),radial-gradient(55% 75% at 82% 28%,#93c5fd,transparent 60%),radial-gradient(60% 70% at 60% 95%,#fcd34d99,transparent 60%),linear-gradient(135deg,#0b1324,#1d4ed8)}`;
+  const para = 'Placeholder page content so you can scroll the preview and see how the pattern behaves alongside a real page. Sticky bars stay put, fixed controls float above, and scroll effects run as this text moves.';
+  const FILLER = '<div class="demo-filler"><div class="demo-art"></div>' + ['Scroll inside this preview', 'Our services', 'Why customers choose us', 'Service areas', 'Get in touch']
+    .map((h) => `<h2>${h}</h2><p>${para}</p><p>${para}</p>`).join('') + '</div>';
+
+  // Assemble one isolated preview document
+  function buildDoc(p, id) {
+    const bridge = `(()=>{const post=()=>parent.postMessage({previewId:${id},height:Math.ceil(document.documentElement.scrollHeight)},'*');
+addEventListener('load',post);new ResizeObserver(post).observe(document.documentElement);
+document.addEventListener('click',(e)=>{const a=e.target.closest&&e.target.closest('a[href]');if(a&&!a.getAttribute('href').startsWith('#'))e.preventDefault();},true);
+document.addEventListener('submit',(e)=>{if((e.target.getAttribute('method')||'').toLowerCase()!=='dialog')e.preventDefault();});})();`;
+    const body = p.wrap ? `<div class="demo-pad">${p.html}</div>` : p.html;
+    const filler = p.cfg.filler ? FILLER : '';
+    const content = p.cfg.filler === 'before' ? filler + body : body + filler;
+    const scripts = p.js.map((j) => `<script type="module">${j}<\/script>`).join('');
+    return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..800&family=Geist+Mono:wght@400..600&display=swap">${(p.fonts || []).map((u) => `<link rel="stylesheet" href="${esc(u)}">`).join('')}<style>${data.tokens}</style><style>${BASE}</style><style>${p.css}</style></head><body><script>${bridge}<\/script>${content}${scripts}</body></html>`;
+  }
+
+  // Create (or recreate) the iframe for a stage
+  function mount(stage) {
+    const p = patterns.get(stage.dataset.pattern);
+    let rec = [...frames.values()].find((r) => r.stage === stage);
+    if (!rec) {
+      const iframe = document.createElement('iframe');
+      iframe.title = `Preview: ${p.title}`;
+      iframe.setAttribute('allow', 'clipboard-write');
+      iframe.style.height = (p.cfg.mode === 'fixed' ? p.cfg.h : stage.dataset.h || p.cfg.min) + 'px';
+      stage.textContent = '';
+      stage.append(iframe);
+      rec = { id: ++frameSeq, iframe, p, stage };
+      frames.set(rec.id, rec);
+    }
+    rec.iframe.srcdoc = buildDoc(p, rec.id);
+  }
+
+  // Auto-height for previews that size to their content
+  window.addEventListener('message', (e) => {
+    const d = e.data;
+    if (!d || typeof d.previewId !== 'number') return;
+    const rec = frames.get(d.previewId);
+    if (!rec || e.source !== rec.iframe.contentWindow || rec.p.cfg.mode === 'fixed') return;
+    const h = Math.min(Math.max(d.height, rec.p.cfg.min || 140), rec.p.cfg.max || 900);
+    if (Math.abs(parseFloat(rec.iframe.style.height) - h) > 1) rec.iframe.style.height = h + 'px';
+  });
+
+  // Render index and cards
+  const WIDTHS = [['phone', 'Phone'], ['tablet', 'Tablet'], ['full', 'Full']];
+  let html = '';
+  data.groups.forEach((g) => {
+    indexBody.insertAdjacentHTML('beforeend', `<div><p class="index__group">${esc(g.name)}</p><ul>${g.files.map((f) =>
+      `<li><a href="#file-${f.stem}" data-file="${f.stem}"><span>${esc(f.title)}</span><span class="n">${f.patterns.length}</span></a></li>`).join('')}</ul></div>`);
+    g.files.forEach((f) => {
+      html += `<section class="file" id="file-${f.stem}" data-file="${f.stem}" aria-labelledby="h-${f.stem}">
+        <header class="file__head"><p class="file__eyebrow">${esc(g.name)}</p><h2 id="h-${f.stem}">${esc(f.title)}</h2>
+        ${f.desc ? `<p class="file__desc">${f.desc}</p>` : ''}<code class="path">${esc(f.path)}</code></header>`;
+      f.patterns.forEach((p) => {
+        p.file = f;
+        p.search = `${p.title} ${p.desc} ${f.title} ${g.name}`.toLowerCase().replace(/<[^>]+>/g, '');
+        patterns.set(p.id, p);
+        html += `<article class="card" id="${p.id}" data-pattern="${p.id}">
+          <div class="card__head"><div class="card__title"><span class="card__num">${String(p.n).padStart(2, '0')}</span><h3><a href="#${p.id}">${esc(p.title)}</a></h3></div>
+          <div class="chips">${p.chips.map((c) => `<span class="chip">${esc(c)}</span>`).join('')}</div></div>
+          ${p.desc ? `<p class="card__desc">${p.desc}</p>` : ''}
+          <div class="bar"><div class="seg" role="group" aria-label="Preview width">${WIDTHS.map(([k, label]) =>
+            `<button type="button" data-width="${k}" aria-pressed="${p.cfg.width === k}">${label}</button>`).join('')}</div>
+            <button type="button" class="tool" data-act="reset">Reset</button>
+            <button type="button" class="tool" data-act="code" aria-expanded="false" aria-controls="code-${p.id}">Code</button></div>
+          <div class="stage" data-pattern="${p.id}" data-w="${p.cfg.width}"><span class="stage__label">Loading preview…</span></div>
+          <div class="code" id="code-${p.id}" hidden></div>
+        </article>`;
+      });
+      html += '</section>';
+    });
+  });
+  main.insertAdjacentHTML('beforeend', html + '<p class="empty" id="empty" hidden></p>');
+
+  // Mount previews as they approach the viewport. Ones that drift far away are unmounted, so a long
+  // scroll doesn't leave hundreds of live, animating documents behind; their height is kept, so nothing jumps.
+  const unmount = (stage) => {
+    const rec = [...frames.values()].find((r) => r.stage === stage);
+    if (!rec) return;
+    stage.dataset.h = rec.iframe.offsetHeight;
+    frames.delete(rec.id);
+    stage.innerHTML = `<span class="stage__label" style="display:block;height:${stage.dataset.h}px">Preview paused off screen</span>`;
+  };
+  const live = (stage) => { io.unobserve(stage); mount(stage); far.observe(stage); };
+  const io = new IntersectionObserver((entries) => entries.forEach((en) => {
+    if (en.isIntersecting) live(en.target);
+  }), { rootMargin: '900px 0px' });
+  const far = new IntersectionObserver((entries) => entries.forEach((en) => {
+    if (en.isIntersecting || !en.target.querySelector('iframe')) return;
+    far.unobserve(en.target);
+    unmount(en.target);
+    io.observe(en.target);
+  }), { rootMargin: '3200px 0px' });
+  document.querySelectorAll('.stage').forEach((s) => io.observe(s));
+
+  // Code viewer, built on first open
+  function buildCode(p, el) {
+    const parts = [['HTML', p.raw.html], ['CSS', p.raw.css], ['JS', p.raw.js]].filter(([, src]) => src && src.trim());
+    el.innerHTML = parts.map(([label, src], i) => `<div class="code__block"><div class="code__head"><span>${label}${
+      p.chips.includes('Builds on #1') && i === 0 ? ' · plus pattern 01 base' : ''}</span>
+      <button type="button" class="tool" data-act="copy">Copy</button></div><pre tabindex="0"><code></code></pre></div>`).join('');
+    el.querySelectorAll('code').forEach((c, i) => { c.textContent = parts[i][1].trimEnd(); });
+  }
+
+  // Toolbar actions
+  main.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    const card = btn.closest('.card');
+    const p = patterns.get(card.dataset.pattern);
+    const stage = card.querySelector('.stage');
+    if (btn.dataset.width) {
+      stage.dataset.w = btn.dataset.width;
+      btn.parentElement.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+      if (!stage.querySelector('iframe')) live(stage);
+    } else if (btn.dataset.act === 'reset') {
+      live(stage);
+    } else if (btn.dataset.act === 'code') {
+      const panel = card.querySelector('.code');
+      if (!panel.childElementCount) buildCode(p, panel);
+      panel.hidden = !panel.hidden;
+      btn.setAttribute('aria-expanded', String(!panel.hidden));
+    } else if (btn.dataset.act === 'copy') {
+      const pre = btn.closest('.code__block').querySelector('pre');
+      const done = (msg) => { btn.textContent = msg; setTimeout(() => { btn.textContent = 'Copy'; }, 1600); };
+      const select = () => { const r = document.createRange(); r.selectNodeContents(pre); const s = getSelection(); s.removeAllRanges(); s.addRange(r); done('Press Ctrl+C'); };
+      try { navigator.clipboard.writeText(pre.textContent).then(() => done('Copied'), select); } catch { select(); }
+    }
+  });
+
+  // Search
+  const q = document.getElementById('q');
+  const count = document.getElementById('count');
+  const empty = document.getElementById('empty');
+  function filter() {
+    const term = q.value.trim().toLowerCase();
+    let shown = 0;
+    document.querySelectorAll('.file').forEach((sec) => {
+      let n = 0;
+      sec.querySelectorAll('.card').forEach((card) => {
+        const hit = !term || patterns.get(card.dataset.pattern).search.includes(term) || sec.dataset.file.includes(term);
+        card.hidden = !hit; n += hit ? 1 : 0;
+      });
+      sec.hidden = n === 0; shown += n;
+      const link = indexBody.querySelector(`a[data-file="${sec.dataset.file}"]`);
+      link.classList.toggle('is-empty', n === 0);
+      link.querySelector('.n').textContent = term ? `${n}/${sec.querySelectorAll('.card').length}` : sec.querySelectorAll('.card').length;
+    });
+    count.textContent = term ? `${shown} of ${data.total}` : `${data.total} patterns`;
+    empty.hidden = shown > 0;
+    empty.textContent = shown ? '' : `No patterns match "${q.value.trim()}". Try a broader word like "menu" or "card".`;
+  }
+  q.addEventListener('input', filter);
+  filter();
+
+  // Index: collapsed by default on narrow screens, closes after picking a file there
+  const index = document.getElementById('index');
+  const wide = matchMedia('(min-width: 1000px)');
+  const syncIndex = () => { index.open = wide.matches; };
+  syncIndex();
+  wide.addEventListener('change', syncIndex);
+  indexBody.addEventListener('click', (e) => { if (e.target.closest('a') && !wide.matches) index.open = false; });
+})();
+</script>
