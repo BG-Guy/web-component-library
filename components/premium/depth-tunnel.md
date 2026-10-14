@@ -1,6 +1,6 @@
 # Depth Tunnel
 
-A pinned, deep-surface stage with real perspective: seven company milestones hang along the Z axis at increasing depth, staggered left, right, up and down around a glowing vanishing point. The signature: scrolling flies the camera forward, so each card swims out of the blur, sharpens as it reaches the focal plane, then rushes past, swelling, softening and fading. A perspective grid floor streams beneath, the light at the end of the tunnel brightens, and a year readout and progress bar track the trip. On phones the offsets tighten and the cards shrink; without JS, or with reduced motion, the same cards form a clean vertical timeline. Depends on `tokens/variables.css`.
+A pinned, deep-surface stage with real perspective: seven company milestones hang along the Z axis at increasing depth, staggered left, right, up and down around a glowing vanishing point. The signature: scrolling flies the camera forward, so each card swims out of the blur, sharpens as it reaches the focal plane, then rushes past, swelling and fading. A perspective grid floor streams beneath, the light at the end of the tunnel brightens, and a year readout and progress bar track the trip. On phones the offsets tighten and the cards shrink; without JS, or with reduced motion, the same cards form a clean vertical timeline. Depends on `tokens/variables.css`.
 
 **Motion:** camera depth, card opacity/blur and floor scroll are all derived in CSS from one scroll-progress variable (linear scrub, rAF) · current-card glow (`--dur-4`, `--ease-out`) · link arrow nudge (`--ease-spring`) · smooth fly-to on keyboard focus · intro hint bobs three times.
 
@@ -160,7 +160,7 @@ A pinned, deep-surface stage with real perspective: seven company milestones han
 }
 /* Floor: a grid laid flat along the stage's bottom edge, streaming toward the viewer with the camera */
 .depth-tunnel--3d .depth-tunnel__floor {
-  display: block; position: absolute; inset: auto -60% 0; height: 260%; transform-origin: 50% 100%; transform: rotateX(88deg);
+  display: block; position: absolute; inset: auto -30% 0; height: 180%; transform-origin: 50% 100%; transform: rotateX(88deg);
   background:
     linear-gradient(color-mix(in srgb, var(--primary-2) 40%, transparent) 2px, transparent 2px) 50% calc(var(--depth-tunnel-t) * 8rem) / 4rem 4rem,
     linear-gradient(90deg, color-mix(in srgb, var(--primary-2) 24%, transparent) 1px, transparent 1px) 50% 0 / 4rem 4rem;
@@ -172,16 +172,21 @@ A pinned, deep-surface stage with real perspective: seven company milestones han
 /* d = camera position minus card index: < 0 still ahead (small, blurred), 0 at the focal plane, > 0 rushing past */
 .depth-tunnel--3d .depth-tunnel__card {
   --depth-tunnel-d: calc(var(--depth-tunnel-t) - var(--depth-tunnel-i, 0));
+  /* Depth is capped just past the point where a card has fully faded, so it never nears the perspective
+     distance: there its projected scale heads to infinity and the GPU texture can take a phone down */
+  --depth-tunnel-z: min(var(--depth-tunnel-d), 0.6);
   grid-area: 1 / 1; width: var(--depth-tunnel-card);
   transform:
-    translate3d(calc(var(--depth-tunnel-x) * var(--depth-tunnel-ox)), calc(var(--depth-tunnel-y) * var(--depth-tunnel-oy)), calc(var(--depth-tunnel-d) * var(--depth-tunnel-gap)))
+    translate3d(calc(var(--depth-tunnel-x) * var(--depth-tunnel-ox)), calc(var(--depth-tunnel-y) * var(--depth-tunnel-oy)), calc(var(--depth-tunnel-z) * var(--depth-tunnel-gap)))
     rotateY(calc(var(--depth-tunnel-x) * -12deg));
   opacity: min(clamp(0, calc(1.6 + var(--depth-tunnel-d) * 0.35), 1), clamp(0, calc(1 - (var(--depth-tunnel-d) - 0.15) * 2.4), 1));
-  filter: blur(max(calc(var(--depth-tunnel-d) * -2.4px), calc((var(--depth-tunnel-d) - 0.1) * 16px), 0px));
-  will-change: transform, opacity, filter;
+  /* Only distant cards blur, and never by more than 6px; cards rushing past just fade */
+  filter: blur(clamp(0px, calc(var(--depth-tunnel-d) * -1.5px), 6px));
+  will-change: transform, opacity;
 }
 .depth-tunnel--3d .depth-tunnel__card.is-current { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--primary-2) 45%, transparent), var(--highlight-inverse), 0 0 70px -24px color-mix(in srgb, var(--primary) 80%, transparent); }
 .depth-tunnel--3d .depth-tunnel__card.is-away { pointer-events: none; }
+.depth-tunnel--3d .depth-tunnel__card.is-gone { visibility: hidden; }
 
 /* HUD: hint, year readout and progress */
 .depth-tunnel--3d .depth-tunnel__hint {
@@ -200,6 +205,10 @@ A pinned, deep-surface stage with real perspective: seven company milestones han
 @media (min-width: 768px) {
   .depth-tunnel { --depth-tunnel-card: 20rem; --depth-tunnel-ox: min(26vw, 20rem); --depth-tunnel-oy: 11vh; --depth-tunnel-gap: 34rem; --depth-tunnel-persp: 62.5rem; }
   .depth-tunnel__card { padding: 1.5rem 1.75rem 1.75rem; }
+}
+/* Phones: no blur at all, the costliest effect on mobile GPUs */
+@media (max-width: 767px) {
+  .depth-tunnel--3d .depth-tunnel__card { filter: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .depth-tunnel-demo *, .depth-tunnel-demo *::before, .depth-tunnel-demo *::after { animation: none !important; }
@@ -230,7 +239,10 @@ document.querySelectorAll('[data-depth-tunnel]').forEach((root) => {
     const p = progress(root);
     const t = p * span - lead;
     root.style.setProperty('--depth-tunnel-p', p.toFixed(4));
-    cards.forEach((card, n) => card.classList.toggle('is-away', t - n > 0.3 || t - n < -3.5));
+    cards.forEach((card, n) => {
+      card.classList.toggle('is-away', t - n > 0.3 || t - n < -3.5);
+      card.classList.toggle('is-gone', t - n > 0.6); // flown past and fully faded: stop painting it
+    });
     const index = Math.min(cards.length - 1, Math.max(0, Math.round(t)));
     if (index === current) return;
     current = index;
@@ -263,4 +275,5 @@ document.querySelectorAll('[data-depth-tunnel]').forEach((root) => {
 - Contrast: cards are near-opaque deep gradients, so `--text-inverse` is ≥ 15:1, `--text-inverse-muted` ≥ 6.7:1 and the year gradient ≥ 7.8:1. Blurred and faded states are passing frames; the card at the focal plane is always sharp at full contrast.
 - Tuning: `--depth-tunnel-gap` (Z distance between cards), `--depth-tunnel-persp`, `--depth-tunnel-ox`/`-oy` (offset spread) and `--depth-tunnel-card` are set per breakpoint. Each card gets 55vh of scroll, and the `nth-child` rules set the left/right/up/down pattern (the last card always lands centred). `lead` (0.4) appears in both the JS and the `--depth-tunnel-t` formula; change both together.
 - Add or remove milestones freely: JS writes `--depth-tunnel-count` and each card's index, and the track height follows. Give each card a `data-year` for the readout.
+- Performance: a card's depth is capped just past the point where it has fully faded, so it never approaches the perspective distance (where its projected size, and its GPU texture, would grow without limit). Cards that have flown past are hidden, only distant cards blur (at most 6px), and phones skip blur entirely. Keep these caps if you change `--depth-tunnel-gap` or `--depth-tunnel-persp`; the gap times 0.6 must stay well under the perspective.
 - Support: plain 3D transforms, `filter` and `min()`/`max()`/`clamp()` inside `opacity`/`blur()` (all current engines); `svh` falls back to `vh`. The floor uses a moving `background-position`, so it costs one repaint of a single layer per frame.
