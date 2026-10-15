@@ -4,7 +4,7 @@
 
 You are a frontend architect with direct access to this curated component library. Its modules are your primary blueprint and source of truth when designing pages. Start from the matching pattern and adapt it. Don't invent a new pattern when one already exists here.
 
-**Premium first.** `components/premium/` holds 100 flagship components: modern design, rich motion, one component per file, grouped in the table below. When a premium component fits the section, use it. Fall back to the base library only for what premium doesn't cover. Most premium components share one visual language (deep surfaces, gradient light, `--font-display`, spring motion), so mixing them keeps a page coherent. The **Retro styles** group is deliberately different: each brings its own era, palette and sometimes font, so use one as a statement section rather than mixing several on a page.
+**Premium first.** `components/premium/` holds 115 flagship components: modern design, rich motion, one component per file, grouped in the table below. When a premium component fits the section, use it. Fall back to the base library only for what premium doesn't cover. Most premium components share one visual language (deep surfaces, gradient light, `--font-display`, spring motion), so mixing them keeps a page coherent. The **Retro styles** group is deliberately different: each brings its own era, palette and sometimes font, so use one as a statement section rather than mixing several on a page.
 
 ## Progressive disclosure
 
@@ -67,6 +67,17 @@ Never load or scan all component files upfront. Read only what the current task 
 | Cover that slides open like doors                | `components/premium/curtain-split.md`     |
 | Glass panels straddling two sections             | `components/premium/overlap-glass.md`     |
 | Card that morphs into a detail view              | `components/premium/card-morph.md`        |
+| **Ambient backgrounds** (scroll-reactive layers behind a page; use one per page) |              |
+| Glossy shapes that pop in and drift with scroll  | `components/premium/ambient-pop-shapes.md` |
+| Gradient blobs that wobble like jelly with scroll speed | `components/premium/ambient-jelly-blobs.md` |
+| Hand-drawn doodles that draw themselves as you scroll | `components/premium/ambient-doodles.md` |
+| Dot grid that ripples as you scroll              | `components/premium/ambient-ripple-grid.md` |
+| Rising service-icon bubbles that pop             | `components/premium/ambient-bubbles.md`   |
+| Water level that rises as you read               | `components/premium/ambient-tide.md`      |
+| 3D wireframe house that turns with scroll        | `components/premium/ambient-wireframe.md` |
+| Leaves, snow or sparks blown by scroll wind      | `components/premium/ambient-wind.md`      |
+| One big shape that morphs per section            | `components/premium/ambient-morph.md`     |
+| Sparkle bursts behind headings as you reach them | `components/premium/ambient-sparks.md`    |
 | **Content sections**                             |                                           |
 | Features / benefits section                      | `components/premium/bento-grid.md`        |
 | Product tour / feature tabs                      | `components/premium/feature-tabs.md`      |
@@ -88,6 +99,12 @@ Never load or scan all component files upfront. Read only what the current task 
 | Team / crew cards                                | `components/premium/crew-cards.md`        |
 | Draggable, endless gallery canvas                | `components/premium/infinite-canvas.md`   |
 | Case studies as tabbed folders                   | `components/premium/folder-stack.md`      |
+| **Service cards**                                |                                           |
+| Service cards whose icons play a little story    | `components/premium/service-living-icons.md` |
+| Service cards that wipe from problem to fixed    | `components/premium/service-fix-cards.md` |
+| Service grid where a card expands into tiers and details | `components/premium/service-expand-grid.md` |
+| Selectable service cards that build a quote      | `components/premium/service-quote-cards.md` |
+| Layered 3D poster service cards                  | `components/premium/service-depth-cards.md` |
 | **Forms and booking**                            |                                           |
 | Contact / lead form                              | `components/premium/floating-label-form.md` |
 | Multi-step quote form                            | `components/premium/quote-wizard.md`      |

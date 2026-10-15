@@ -2,7 +2,7 @@
 
 A collection of modular, battle-tested UI patterns for marketing and local-service sites, built on a shared set of design tokens.
 
-- **`components/premium/`**: 100 flagship components with modern design and rich motion, in eleven groups: navigation and menus, heroes, headlines and type, scroll stories, blending sections, content sections, cards and galleries, forms and booking, feedback and utilities, retro styles, and footers. Start here; the [premium index](#premium-index) lists every file.
+- **`components/premium/`**: 115 flagship components with modern design and rich motion, in thirteen groups: navigation and menus, heroes, headlines and type, scroll stories, blending sections, ambient backgrounds, content sections, cards and galleries, service cards, forms and booking, feedback and utilities, retro styles, and footers. Start here; the [premium index](#premium-index) lists every file.
 - **The base library**: 117 simpler patterns covering everything else: navigation (desktop and mobile), sections, cards, carousels, forms and controls, feedback, buttons, backgrounds, animations and transitions, plus full-page scaffolds.
 
 Every module is self-contained. It depends only on `tokens/variables.css`, so you can lift a single pattern into a project without pulling in the rest of the library.
@@ -32,7 +32,7 @@ web-component-library/
 ├── tokens/
 │   └── variables.css            Design variables: color, type, spacing, layout, motion, radius, elevation
 ├── components/
-│   ├── premium/                 100 flagship components, one per file, in 11 groups (start here; see the premium index)
+│   ├── premium/                 115 flagship components, one per file, in 13 groups (start here; see the premium index)
 │   ├── animations.md            Scroll reveals, progress bar, parallax, rotating words, skeletons, loaders [9]
 │   ├── backgrounds.md           Gradient mesh, patterns, grain, aurora, image scrim, dividers, video [9]
 │   ├── buttons.md               Base button system, icon, loading, toggle, segmented, split, FAB, copy [10]
@@ -129,6 +129,18 @@ Every premium file is one self-contained component in `components/premium/`. Gro
 - `overlap-glass.md`: glass panels straddling two sections, tinted by both
 - `card-morph.md`: case-study card that morphs into a detail view (View Transitions)
 
+**Ambient backgrounds** (scroll-reactive layers behind a page; use one per page)
+- `ambient-pop-shapes.md`: glossy CSS shapes that spring in per section and drift with scroll
+- `ambient-jelly-blobs.md`: gradient blobs that squash and stretch with scroll speed and shift hue down the page
+- `ambient-doodles.md`: hand-drawn margin doodles that draw themselves as you scroll
+- `ambient-ripple-grid.md`: canvas dot grid that ripples with scroll and follows the cursor
+- `ambient-bubbles.md`: service icons in glass bubbles that rise with scroll and pop
+- `ambient-tide.md`: water that rises with reading progress, sloshes and splashes at the end
+- `ambient-wireframe.md`: 3D wireframe house that draws in and turns with scroll
+- `ambient-wind.md`: leaves, snow or sparks blown about by scroll wind (with pause control)
+- `ambient-morph.md`: one big glass shape that morphs into each section's icon
+- `ambient-sparks.md`: one-time sparkle bursts behind headings, twinkles while scrolling
+
 **Content sections**
 - `bento-grid.md`: feature bento with cursor spotlight and one-shot animated stories
 - `feature-tabs.md`: product tour tabs: spring indicator, assembling mocks, autoplay
@@ -151,6 +163,13 @@ Every premium file is one self-contained component in `components/premium/`. Gro
 - `crew-cards.md`: team cards with morphing blob portraits and rolling job counts
 - `infinite-canvas.md`: gallery canvas you drag in any direction, wrapping endlessly
 - `folder-stack.md`: case studies as tabbed folders that shuffle forward
+
+**Service cards**
+- `service-living-icons.md`: service cards whose line icons play a short story on hover and entry
+- `service-fix-cards.md`: cards that wipe from the problem photo to the fixed one
+- `service-expand-grid.md`: grid where a card expands into tiers and details while the rest glide (FLIP)
+- `service-quote-cards.md`: selectable cards with rolling prices that build a quote in a sticky tray
+- `service-depth-cards.md`: Apple TV-style poster cards with layered parallax and glare
 
 **Forms and booking**
 - `floating-label-form.md`: lead form: floating labels, valid ticks, error slide + shake, morphing submit

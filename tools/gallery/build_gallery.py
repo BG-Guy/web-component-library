@@ -22,11 +22,16 @@ PREMIUM_GROUPS = [
                         "depth-tunnel", "scroll-compare", "blueprint-draw", "parallax-scene"]),
     ("Blending sections", ["chameleon-sections", "blend-text", "section-stack", "seam-melt", "liquid-divider",
                            "curtain-split", "overlap-glass", "card-morph"]),
+    ("Ambient backgrounds", ["ambient-pop-shapes", "ambient-jelly-blobs", "ambient-doodles", "ambient-ripple-grid",
+                             "ambient-bubbles", "ambient-tide", "ambient-wireframe", "ambient-wind", "ambient-morph",
+                             "ambient-sparks"]),
     ("Content sections", ["bento-grid", "feature-tabs", "stat-counters", "pricing-plans", "smooth-accordion",
                           "logo-marquee", "testimonial-wall"]),
     ("Cards & galleries", ["drag-carousel", "lightbox-gallery", "holo-card", "swipe-deck", "expand-panels",
                            "hover-preview-list", "coverflow", "wallet-pass", "hotspot-explorer", "crew-cards",
                            "infinite-canvas", "folder-stack"]),
+    ("Service cards", ["service-living-icons", "service-fix-cards", "service-expand-grid", "service-quote-cards",
+                       "service-depth-cards"]),
     ("Forms & booking", ["floating-label-form", "quote-wizard", "booking-calendar", "estimate-calculator",
                          "coverage-checker", "job-tracker", "otp-input", "file-drop", "star-rating"]),
     ("Feedback & utilities", ["premium-buttons", "spring-modal", "toast-stack", "chat-widget", "confetti",
@@ -95,6 +100,11 @@ PREMIUM_FRAME = {
     "card-morph": dict(mode="auto", min=660),
     "command-palette": dict(mode="auto", min=560),
     "search-hero": dict(mode="auto", min=600),
+    # Round 3: ambient backgrounds play while scrolling a mini landing page inside a fixed frame
+    **{stem: dict(mode="fixed", h=680) for stem in [
+        "ambient-pop-shapes", "ambient-jelly-blobs", "ambient-doodles", "ambient-ripple-grid", "ambient-bubbles",
+        "ambient-tide", "ambient-wireframe", "ambient-wind", "ambient-morph", "ambient-sparks"]},
+    "service-quote-cards": dict(mode="auto", min=640),
 }
 FILE_FRAME = {
     "navbar-variants": dict(mode="fixed", h=560, filler="after"),
